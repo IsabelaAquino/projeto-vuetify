@@ -1,6 +1,6 @@
 <template>
   <div id="settings-wrapper">
-    <v-card
+    <!-- <v-card
       id="settings"
       class="py-2 px-4"
       color="rgba(0, 0, 0, .3)"
@@ -13,20 +13,30 @@
       <v-icon large>
         mdi-cog
       </v-icon>
-    </v-card>
+    </v-card> -->
 
     <v-menu
-      v-model="menu"
       :close-on-content-click="false"
-      activator="#settings"
       bottom
-      content-class="v-settings"
       left
-      nudge-left="8"
-      offset-x
+      min-width="200"
+      offset-y
       origin="top right"
       transition="scale-transition"
+      class="mt-7"
+      style="margin-top: 70px !important;"
     >
+      <template v-slot:activator="{ settings, on }">
+        <v-btn
+          class="ml-2"
+          min-width="0"
+          text
+          v-bind="settings"
+          v-on="on"
+        >
+          <v-icon>mdi-cog</v-icon>
+        </v-btn>
+      </template>
       <v-card
         class="text-center mb-0"
         width="300"
@@ -149,87 +159,6 @@
 
           <v-divider class="my-4 secondary" />
 
-          <strong class="mb-3 d-inline-block">IMAGES</strong>
-
-          <v-card
-            :disabled="!drawerImage"
-            flat
-          >
-            <v-item-group
-              v-model="image"
-              class="d-flex justify-space-between mb-3"
-            >
-              <v-item
-                v-for="(img, index) in images"
-                :key="img"
-                :value="index"
-                class="mx-1"
-              >
-                <template v-slot="{ active, toggle }">
-                  <v-sheet
-                    :class="active && 'v-settings__item--active'"
-                    class="d-inline-block v-settings__item"
-                    @click="toggle"
-                  >
-                    <v-img
-                      :src="img"
-                      height="100"
-                      width="50"
-                    />
-                  </v-sheet>
-                </template>
-              </v-item>
-            </v-item-group>
-          </v-card>
-
-          <v-btn
-            block
-            class="mb-3"
-            color="grey darken-1"
-            dark
-            href="https://vuetifyjs.com/components/api-explorer"
-            rel="noopener"
-            target="_blank"
-          >
-            Vuetify Documentation
-          </v-btn>
-
-          <v-btn
-            block
-            color="info"
-            href="https://store.vuetifyjs.com/products/vuetify-material-dashboard-free"
-            rel="noopener"
-            target="_blank"
-          >
-            Get Free Demo
-          </v-btn>
-
-          <div class="my-12" />
-
-          <div>
-            <strong class="mb-3 d-inline-block">THANK YOU FOR SHARING!</strong>
-          </div>
-
-          <v-btn
-            class="ma-1"
-            color="#55acee"
-            dark
-            rounded
-          >
-            <v-icon>mdi-twitter</v-icon>
-            - 45
-          </v-btn>
-
-          <v-btn
-            class="ma-1"
-            color="#3b5998"
-            dark
-            default
-            rounded
-          >
-            <v-icon>mdi-facebook</v-icon>
-            - 50
-          </v-btn>
         </v-card-text>
       </v-card>
     </v-menu>
@@ -249,8 +178,9 @@
     mixins: [Proxyable],
 
     data: () => ({
-      color: '#E91E63',
+      color: '#124584',
       colors: [
+        '#124584',
         '#9C27b0',
         '#00CAE3',
         '#4CAF50',

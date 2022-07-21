@@ -24,13 +24,15 @@
 
     <v-spacer />
 
-    <default-search class="hidden-sm-and-down" />
+    <!-- <default-search class="hidden-sm-and-down" />
 
     <default-go-home />
 
-    <default-notifications />
+    <default-notifications /> -->
 
-    <default-account />
+    <default-settings />
+
+    <!-- <default-account /> -->
   </v-app-bar>
 </template>
 
@@ -61,6 +63,10 @@
       DefaultSearch: () => import(
         /* webpackChunkName: "default-search" */
         './widgets/Search'
+      ),
+      DefaultSettings: () => import(
+        /* webpackChunkName: "default-settings" */
+        './Settings'
       ),
     },
 

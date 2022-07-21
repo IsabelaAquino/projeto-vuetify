@@ -31,28 +31,6 @@
 
     <template #append>
       <div class="pa-4 text-center">
-        <app-btn
-          class="text-none mb-4"
-          color="white"
-          href="https://vuetifyjs.com"
-          small
-          text
-        >
-          Documentation
-        </app-btn>
-
-        <app-btn
-          block
-          class="text-none"
-          color="secondary"
-          href="https://store.vuetifyjs.com/products/vuetify-material-dashboard-pro"
-        >
-          <v-icon left>
-            mdi-package-up
-          </v-icon>
-
-          Upgrade to Pro
-        </app-btn>
       </div>
     </template>
 

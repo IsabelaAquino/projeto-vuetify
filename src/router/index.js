@@ -20,10 +20,11 @@ const router = new Router({
   },
   routes: [
     layout('Default', [
-      route('Dashboard'),
+      route('Produtos'),
 
       // Pages
       route('UserProfile', null, 'components/profile'),
+      route('Dashboard', null, '/dashboard'),
 
       // Components
       route('Notifications', null, 'components/notifications'),

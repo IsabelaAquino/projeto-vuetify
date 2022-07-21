@@ -11,9 +11,9 @@
   export default {
     name: 'App',
     metaInfo: {
-      title: 'App',
+      title: 'CRUD iCertus - Projeto com Vuetify',
       titleTemplate: '%s | Material Dashboard Free',
-      htmlAttrs: { lang: 'en' },
+      htmlAttrs: { lang: 'pt-br' },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
