@@ -1,8 +1,12 @@
 module.exports = {
-  root: true,
+  root: false,
 
   env: {
-    node: true,
+    node: false,
+  },
+
+  dev: {
+      useEslint: false
   },
 
   plugins: ['vuetify'],
@@ -26,8 +30,8 @@ module.exports = {
   overrides: [
     {
       files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
+        // '**/__tests__/*.{j,t}s?(x)',
+        // '**/tests/unit/**/*.spec.{j,t}s?(x)',
       ],
       env: {
         jest: true,
