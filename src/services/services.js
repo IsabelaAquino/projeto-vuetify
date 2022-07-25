@@ -13,8 +13,8 @@ const ProdutosService = {
     //     let uri = '/atrativos';
     //     return crm['post'].call(crm, uri, dados);
     // },
-    get: () => {
-      let uri = '/products'
+    get: (uri) => {
+      // let uri = '/products'
       return api.get(uri);
     },
     // post(endpoint, body) {
