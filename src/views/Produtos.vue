@@ -4,12 +4,19 @@
     fluid
     tag="section"
   >
+    <material-alert
+      v-bind:color="returnRequest"
+      dark
+      v-if="notificacao"
+    >
+      {{returnRequestMessagem}}
+    </material-alert>
     <view-intro
       heading="Tabela de Produtos"
     />
       <div class="text-center">
         <v-dialog
-          v-model="dialog"
+          v-model="modalAddProduto"
           width="500"
         >
           <template v-slot:activator="{ on, attrs }">
@@ -34,31 +41,13 @@
             </v-card-title>
 
             <v-card-text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              <ProdutoAdicionar @atualizaProdutos="atualizaProdutos" />
             </v-card-text>
 
             <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="primary"
-                text
-                @click="dialog = false"
-              >
-                I accept
-              </v-btn>
-            </v-card-actions>
           </v-card>
         </v-dialog>
       </div>
-      <!-- <v-btn
-        color="primary"
-        min-width="150"
-      >
-        Adicionar Produto  <v-icon>mdi-plus</v-icon>
-      </v-btn> -->
-
     <div v-if="produtos && produtos.length" key="produtos">
       <material-card
         icon="mdi-clipboard"
@@ -81,6 +70,12 @@
               <th class="text-right primary--text">
                 Preço
               </th>
+              <th class="primary--text">
+                Editar
+              </th>
+              <th class="primary--text">
+                Excluir
+              </th>
             </tr>
           </thead>
 
@@ -91,6 +86,16 @@
               <td>{{produto.category}}</td>
               <td class="text-right">
                 {{produto.price}}
+              </td>
+              <td>
+                <v-icon color="#00aeff" dark>
+                  mdi-auto-fix
+                </v-icon>
+              </td>
+              <td>
+                <v-icon @click.prevent="removerItem(produto)" color="#FF0000" dark>
+                  mdi-delete
+                </v-icon>
               </td>
             </tr>
           </tbody>
@@ -110,26 +115,30 @@
   import ProdutosService from "../services/services";
   import ProdutosPaginar from './pages/produtos/ProdutosPaginar.vue'
   import { serialize } from "../helpers/helpers";
+  import ProdutoAdicionar from './pages/produtos/ProdutoAdicionar.vue'
   import modal from '../components/modal/main.vue'
 
   export default {
     name: 'Produtos',
 
     components: {
-      ProdutosPaginar
+      ProdutosPaginar,
+      ProdutoAdicionar
     },
     data() {
       return {
         produtos: null,
         produtosPorPagina: 10,
         produtosTotal: 20,
-        modalAddProduto: false
+        modalAddProduto: false,
+        notificacao: false,
+        returnRequest: "success",
+        returnRequestMessagem: ""
       };
     },
     computed: {
       url() {
         const query = serialize(this.$route.query);
-        console.log("query", query)
         return `/products?limit=${this.produtosPorPagina}`;
       }
     },
@@ -144,6 +153,38 @@
           this.produtosTotal = Number(response.headers["x-total-count"]);
           this.produtos = response.data;
         });
+      },
+
+      atualizaProdutos(retorno){
+
+        this.modalAddProduto = !this.modalAddProduto
+        this.ativaNotificacao(retorno)
+        if(retorno == 'success')
+          this.returnRequestMessagem = 'Produto Adicionado com Sucesso.'
+        else
+          this.returnRequestMessagem = 'Ocorreu um erro ao adicionar um novo produto.'
+      },
+
+      ativaNotificacao(retorno){
+        this.notificacao = true
+        this.returnRequest = retorno
+
+        setTimeout(() => {
+          this.notificacao = false
+        }, 1500);
+      },
+
+      removerItem(produto){
+        if(confirm('Deseja excluir esse produto?')){
+          ProdutosService.delete(produto.id).then((response) => {
+            this.ativaNotificacao("success")
+            this.returnRequestMessagem = 'Produto removido com sucesso!'
+          }
+          ).catch(error =>{
+            this.ativaNotificacao("error")
+            this.returnRequestMessagem = 'Ocorreu um erro ao remover esse produto.'
+          })
+        }
       }
     },
     watch: {

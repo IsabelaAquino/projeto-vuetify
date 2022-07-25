@@ -9,10 +9,10 @@ const ProdutosService = {
     //     let uri = '/atrativos/' + id;
     //     return crm['put'].call(crm, uri, dados);
     // },
-	  // storeAtrativos: (dados) => {
-    //     let uri = '/atrativos';
-    //     return crm['post'].call(crm, uri, dados);
-    // },
+	  post: (dados) => {
+        let uri = '/products';
+        return api['post'].call(api, uri, dados);
+    },
     get: (uri) => {
       // let uri = '/products'
       return api.get(uri);
@@ -23,9 +23,10 @@ const ProdutosService = {
     // put(endpoint, body) {
     //   return axiosInstance.put(endpoint, body);
     // },
-    // delete(endpoint) {
-    //   return axiosInstance.delete(endpoint);
-    // }
+    delete(id) {
+      let uri = '/products/' + id
+      return api['delete'].call(api, uri);
+    }
 };
 
 export default ProdutosService;
